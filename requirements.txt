@@ -1,0 +1,7 @@
+Flask
+Flask-SQLAlchemy
+Flask-WTF
+Flask-Mail
+Werkzeug
+Flask-Login
+firebase-admin
