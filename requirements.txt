@@ -5,3 +5,4 @@ Flask-Mail
 Werkzeug
 Flask-Login
 firebase-admin
+Flask-Migrate
