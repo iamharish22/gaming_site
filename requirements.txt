@@ -6,3 +6,4 @@ Werkzeug
 Flask-Login
 firebase-admin
 Flask-Migrate
+gunicorn
