@@ -1,5 +1,46 @@
 {% extends 'base.html' %}
+
 {% block content %}
 <h1>Dashboard</h1>
-<p>Welcome, {{ name }}!</p>
+<p>Welcome, {{ current_user.username }}!</p>
+
+<!-- Profile Overview -->
+<div class="profile-overview">
+    <h2>Your Profile</h2>
+    
+    <!-- Profile Picture -->
+    <div class="profile-picture">
+        <h3>Profile Picture</h3>
+        {% if current_user.profile_picture %}
+            <img src="{{ url_for('static', filename='profile_pics/' ~ current_user.profile_picture) }}" alt="Profile Picture" style="max-width: 200px;">
+        {% else %}
+            <p>No profile picture uploaded.</p>
+        {% endif %}
+    </div>
+
+    <!-- Bio -->
+    <div class="bio-section">
+        <h3>Bio</h3>
+        <p>{{ current_user.bio if current_user.bio else "No bio available." }}</p>
+    </div>
+
+    <!-- Social Media Links -->
+    <div class="social-media-section">
+        <h3>Social Media Links</h3>
+        <ul>
+            {% if current_user.social_media_links %}
+                {% for platform, link in current_user.social_media_links.items() %}
+                    <li><a href="{{ link }}" target="_blank">{{ platform }}</a></li>
+                {% endfor %}
+            {% else %}
+                <p>No social media links added.</p>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+
+<!-- Update Profile Button -->
+<div class="update-profile-section">
+    <a href="{{ url_for('update_profile') }}" method="POST" enctype="multipart/form-data" class="btn btn-primary">Update Profile</a>
+</div>
 {% endblock %}

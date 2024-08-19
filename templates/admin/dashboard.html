@@ -1,9 +1,112 @@
-{% extends 'base.html' %}
-{% block content %}
-<h1>Admin Dashboard</h1>
-<ul>
-    {% for user in users %}
-    <li>{{ user.username }} - {{ user.email }}</li>
-    {% endfor %}
-</ul>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        /* General button styling */
+        .btn {
+            display: inline-block;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            font-weight: 400;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.15s ease-in-out;
+            background-color: transparent; /* Ensure default background is transparent */
+        }
+
+        /* Danger button specific styling */
+        .btn-danger {
+            background-color: #dc3545; /* Red background */
+            color: white; /* White text */
+            border: 1px solid #dc3545; /* Red border */
+            padding: 4px 8px; /* Smaller padding */
+            font-size: 12px; /* Smaller font size */
+            line-height: 1.5; /* Adjust line-height */
+            box-shadow: none; /* Remove any box-shadow */
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333; /* Darker red on hover */
+            border-color: #c82333; /* Darker red border on hover */
+        }
+
+        .btn-danger:active {
+            background-color: #bd2130; /* Even darker red when pressed */
+            border-color: #bd2130; /* Even darker red border when pressed */
+        }
+
+        /* Styling for forms */
+        form {
+            display: inline; /* Ensure form does not create additional block space */
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+            border: none; /* Remove default border */
+            background: transparent; /* Ensure background is transparent */
+        }
+
+        /* Button inside form */
+        form .btn-danger {
+            margin: 0; /* Remove margins around the button */
+            padding: 4px 8px; /* Ensure button has consistent padding */
+            font-size: 12px; /* Smaller font size */
+            line-height: 1.5; /* Adjust line-height */
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+    
+    <h2>Registered Users</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Match Registrations</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Game</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for registration in registrations %}
+            <tr>
+                <td>{{ registration.username }}</td>
+                <td>{{ registration.phone }}</td>
+                <td>{{ registration.email }}</td>
+                <td>{{ registration.game }}</td>
+                <td>
+                    <form action="{{ url_for('delete_registration', id=registration.id) }}" method="POST">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this registration?');">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ url_for('admin_logout') }}">Logout</a>
+</body>
+</html>

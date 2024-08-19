@@ -1,8 +1,21 @@
-body {
-    font-family: Arial, sans-serif;
+html, body {
+    height: 100%;
     margin: 0;
     padding: 0;
+    font-family: Arial, sans-serif;
     background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header, main {
+    flex: 1;
 }
 
 nav {
@@ -31,7 +44,7 @@ h1 {
 form {
     width: 300px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 35px;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
@@ -80,3 +93,112 @@ ul li {
     margin: 5px 0;
     border-radius: 4px;
 }
+
+/* Footer Styling */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: auto;
+    width: 100%;
+}
+
+.footer-content p {
+    margin: 0;
+    padding: 5px;
+}
+
+.footer-content ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0 0 0;
+}
+
+.footer-content ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+.footer-content ul li a {
+    color: black;
+    text-decoration: none;
+}
+
+.footer-content ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Styles for the delete button */
+/* Button styling */
+.btn-danger {
+    background-color: #ff6b6b; /* Light red color */
+    color: #fff;
+    border: 1px solid #ff6b6b; /* Border to match background color */
+    padding: 4px 10px; /* Smaller padding */
+    font-size: 12px; /* Smaller font size */
+    border-radius: 3px; /* Slightly smaller border radius */
+    cursor: pointer;
+    text-align: center; /* Center text */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-danger:hover {
+    background-color: #ff4757; /* Darker shade on hover */
+    border-color: #ff4757; /* Darker border color on hover */
+}
+
+.btn-danger:active {
+    background-color: #e84118; /* Even darker shade when pressed */
+    border-color: #e84118; /* Darker border color when pressed */
+}
+
+
+/* General table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+/* Table header styling */
+thead th {
+    background-color: #f2f2f2;
+    color: #333;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+}
+
+/* Table body styling */
+tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Alternating row colors */
+tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+/* Hover effect on table rows */
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Button styling */
+.btn-danger {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+}
+
+

@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Admin Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
     <h1>Admin Login</h1>
@@ -23,6 +24,16 @@
             </ul>
         {% endif %}
     {% endwith %}
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Your Website Name. All rights reserved.</p>
+            <ul>
+                <li><a href="/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/terms-of-service">Terms of Service</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+            </ul>
+        </div>
+    </footer>
 </body>
 </html>
 

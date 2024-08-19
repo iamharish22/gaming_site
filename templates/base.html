@@ -11,6 +11,7 @@
         <a href="{{ url_for('index') }}">Home</a>
         {% if current_user.is_authenticated %}
             <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('change_password') }}">Change Password</a>
             <a href="{{ url_for('logout') }}">Logout</a>
         {% else %}
             <a href="{{ url_for('login') }}">Login</a>
@@ -29,5 +30,17 @@
         {% endwith %}
     </div>
     {% block content %}{% endblock %}
+    <!-- templates/_footer.html -->
+<footer>
+    <div class="footer-content">
+        <p>&copy; 2024 Your Website Name. All rights reserved.</p>
+        <ul>
+            <li><a href="/privacy-policy">Privacy Policy</a></li>
+            <li><a href="/terms-of-service">Terms of Service</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+        </ul>
+    </div>
+</footer>
+
 </body>
 </html>

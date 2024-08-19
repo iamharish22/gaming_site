@@ -1,0 +1,30 @@
+<!-- update_profile_page.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h1>Update Your Profile</h1>
+
+    <form action="{{ url_for('update_profile') }}" method="post">
+        <div>
+            <label for="profile_picture">Profile Picture:</label>
+            <input type="file" name="profile_picture" id="profile_picture">
+        </div>
+        <div>
+            <label for="bio">Bio:</label>
+            <textarea name="bio" id="bio">{{ user.bio }}</textarea>
+        </div>
+        <div>
+            <label for="social_media_links">Social Media Links (JSON):</label>
+            <textarea name="social_media_links" id="social_media_links">{{ user.social_media_links | tojson }}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Profile</button>
+    </form>
+    
+    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+</body>
+</html>
