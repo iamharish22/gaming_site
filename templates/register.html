@@ -4,18 +4,31 @@
 <form method="POST">
     <div>
         <label for="username">Username</label>
-        <input type="text" name="username" id="username" required>
+        <input type="text" name="username" id="username" value="{{ request.form.get('username', '') }}" required>
     </div>
     <div>
         <label for="email">Email</label>
-        <input type="email" name="email" id="email" required>
+        <input type="email" name="email" id="email" value="{{ request.form.get('email', '') }}" required>
     </div>
     <div>
         <label for="password">Password</label>
-        <input type="password" name="password" id="password" required>
+        <input type="password" name="password" id="password" value="{{ request.form.get('password', '') }}" required>
     </div>
+
+    {% if otp_sent %}
     <div>
-        <input type="submit" value="Register">
+        <label for="otp">Enter OTP</label>
+        <input type="text" name="otp" id="otp" required>
+    </div>
+    {% endif %}
+
+    <div>
+        <input type="submit" name="action" value="Send OTP">
+        {% if otp_sent %}
+        <input type="submit" name="action" value="Verify OTP">
+        {% endif %}
     </div>
 </form>
 {% endblock %}
+
+

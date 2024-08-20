@@ -19,8 +19,22 @@
                 <a href="{{ url_for('register') }}">Register</a>
             {% endif %}
             <a href="{{ url_for('quick_join') }}">Quick Join a Match</a>
+            <a href="{{ url_for('admin_login') }}">Admin Login</a>
         </nav>
     </header>
+
+    <!-- Flash Messages Section -->
+    <section>
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </section>
 
     <main>
         <!-- Your main content goes here -->
@@ -39,3 +53,4 @@
     </footer>
 </body>
 </html>
+

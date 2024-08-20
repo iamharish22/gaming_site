@@ -6,8 +6,10 @@ from flask_migrate import Migrate
 from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from werkzeug.utils import secure_filename
+from sqlalchemy.exc import IntegrityError
 import os
 import json
+import random
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -19,10 +21,11 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'default-secret-key')
 app.config.update(
     MAIL_SERVER='sandbox.smtp.mailtrap.io',
     MAIL_PORT=587,
-    MAIL_USERNAME='5bd1b2978400a9',
-    MAIL_PASSWORD='e3f6a9d80c2a82',
+    MAIL_USERNAME='88daee7f3f0488',
+    MAIL_PASSWORD='5c5f49fa3be358',
     MAIL_USE_TLS=True,
-    MAIL_USE_SSL=False
+    MAIL_USE_SSL=False,
+    MAIL_DEFAULT_SENDER='88daee7f3f0488' 
 )
 mail = Mail(app)
 
@@ -69,26 +72,47 @@ def load_user(user_id):
 def index():
     return render_template('index.html')
 
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    otp_sent = False
     if request.method == 'POST':
+        action = request.form['action']
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
 
-        if User.query.filter_by(username=username).first():
-            flash('Username already exists!', 'danger')
-            return redirect(url_for('register'))
+        if action == 'Send OTP':
+            # Generate and send OTP
+            session['otp'] = str(random.randint(100000, 999999))  # Store OTP in session
+            msg = Message('Your OTP', sender='your-email@example.com', recipients=[email])
+            msg.body = f'Your OTP is {session["otp"]}'
+            mail.send(msg)
+            otp_sent = True
+            flash('OTP sent to your email!', 'info')
 
-        new_user = User(username=username, email=email)
-        new_user.set_password(password)
-        db.session.add(new_user)
-        db.session.commit()
+        elif action == 'Verify OTP':
+            entered_otp = request.form['otp']
+            if entered_otp == session.get('otp'):
+                try:
+                    new_user = User(username=username, email=email)
+                    new_user.set_password(password)
+                    db.session.add(new_user)
+                    db.session.commit()
+                    session.pop('otp', None)  # Clear OTP from session
+                    flash('Registration successful!', 'success')
+                    return redirect(url_for('login'))
+                except IntegrityError:
+                    db.session.rollback()  # Rollback the session to clear any changes
+                    flash('Error: Email address already registered!', 'danger')
+                    otp_sent = True  # Keep the OTP sent flag true so the form is displayed correctly
+            else:
+                flash('Invalid OTP!', 'danger')
+                otp_sent = True
 
-        flash('Registration successful!', 'success')
-        return redirect(url_for('login'))
+    return render_template('register.html', otp_sent=otp_sent)
 
-    return render_template('register.html')
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -261,7 +285,9 @@ def admin_logout():
 with app.app_context():
     db.create_all()
 
+
 if __name__ == '__main__':
     app.run(debug=True)
+
 
 
